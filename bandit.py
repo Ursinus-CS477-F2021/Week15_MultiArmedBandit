@@ -14,9 +14,8 @@ class Bandit:
         """
         self.K = K
         np.random.seed(seed)
-        self.sigmas = np.random.rand(K)
-        self.mus = 5*np.abs(np.random.randn(K))
-        self.mus += 3*self.sigmas
+        self.sigmas = np.abs(np.random.randn(K))
+        self.mus = np.random.randn(K)
 
     def pull(self, k):
         """
@@ -27,7 +26,7 @@ class Bandit:
         k: int
             Arm index
         """
-        return max(self.mus[k] + self.sigmas[k]*np.random.randn(), 0)
+        return self.mus[k] + self.sigmas[k]*np.random.randn()
     
 
 def naive_maximize_reward(bandit, n_trials):
